@@ -1,37 +1,32 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"strings"
+	"time"
 
-// func shuffleWord(word string) []rune {
-// 	wordInnerials := word[1 : len(word)-1]
-// 	shuffledString := []rune(wordInnerials)
-// 	rand.Shuffle(len(word), func(i, j int) { shuffledString[i], shuffledString[j] = shuffledString[j], shuffledString[i] })
-// 	shuffledString = append(shuffledString, rune(word[len(word)-1]))
-// 	// shuffledString.
-// 	return shuffledString
-// }
+	"word-letters-shuffle/word"
+)
 
 // TODO: dopisać testy
 // TODO: wystawić jako serwis na Heroku
 
 func main() {
 
-	// inputText := ""
-	// rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano()) // to ensure unique shuffle each time it runs
+	inputText := "According to a research at Cambridge University, it doesn't matter in what order the letters in a word are, the only important thing is that the first and last letter be at the right place. The rest can be a total mess and you can still read it without problem. This is because the human mind does not read every letter by itself but the word as a whole."
 
-	// inputTextSplitted := strings.Fields(inputText)
-	// outputTextSplitted := make([]string, 0, 100)
+	inputTextSplitted := strings.Fields(inputText)
+	outputTextSplitted := make([]string, 0, 100)
 
-	// for i := range inputTextSplitted {
-	// 	shuffledWord := shuffleWord(inputTextSplitted[i])
-	// 	outputTextSplitted = append(outputTextSplitted, string(shuffledWord))
-	// }
+	for i := range inputTextSplitted {
+		shuffledWord := word.ShuffleWordInnerials(inputTextSplitted[i])
+		outputTextSplitted = append(outputTextSplitted, string(shuffledWord))
+	}
 
-	// fmt.Println(outputTextSplitted)
+	outputText := strings.Join(outputTextSplitted, " ")
 
-	testString := "literal"
+	fmt.Println(outputText)
 
-	testString2 := testString[:1] + "d" + testString[2:]
-
-	fmt.Println(testString2)
 }
