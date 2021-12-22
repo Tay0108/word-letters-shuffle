@@ -2,6 +2,7 @@ package main
 
 import (
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 
@@ -17,6 +18,12 @@ type InputTextBody struct {
 }
 
 func main() {
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = ":5000"
+	}
 
 	app := fiber.New()
 
@@ -44,6 +51,6 @@ func main() {
 		return c.SendString(outputText)
 	})
 
-	app.Listen(":3000")
+	app.Listen(port)
 
 }
