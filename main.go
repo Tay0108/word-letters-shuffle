@@ -1,32 +1,49 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"strings"
 	"time"
 
 	"word-letters-shuffle/word"
+
+	"github.com/gofiber/fiber/v2"
 )
 
-// TODO: dopisać testy
 // TODO: wystawić jako serwis na Heroku
+
+type InputTextBody struct {
+	Text string `json:"text"`
+}
 
 func main() {
 
-	rand.Seed(time.Now().UnixNano()) // to ensure unique shuffle each time it runs
-	inputText := "According to a research at Cambridge University, it doesn't matter in what order the letters in a word are, the only important thing is that the first and last letter be at the right place. The rest can be a total mess and you can still read it without problem. This is because the human mind does not read every letter by itself but the word as a whole."
+	app := fiber.New()
 
-	inputTextSplitted := strings.Fields(inputText)
-	outputTextSplitted := make([]string, 0, 100)
+	app.Get("/", func(c *fiber.Ctx) error {
+		inputTextBody := new(InputTextBody)
 
-	for i := range inputTextSplitted {
-		shuffledWord := word.ShuffleWordInnerials(inputTextSplitted[i])
-		outputTextSplitted = append(outputTextSplitted, string(shuffledWord))
-	}
+		if err := c.BodyParser(inputTextBody); err != nil {
+			return err
+		}
 
-	outputText := strings.Join(outputTextSplitted, " ")
+		inputText := inputTextBody.Text
 
-	fmt.Println(outputText)
+		rand.Seed(time.Now().UnixNano()) // to ensure unique shuffle each time it runs
+
+		inputTextSplitted := strings.Fields(inputText)
+		outputTextSplitted := make([]string, 0, 100)
+
+		for i := range inputTextSplitted {
+			shuffledWord := word.ShuffleWordInnerials(inputTextSplitted[i])
+			outputTextSplitted = append(outputTextSplitted, string(shuffledWord))
+		}
+
+		outputText := strings.Join(outputTextSplitted, " ")
+
+		return c.SendString(outputText)
+	})
+
+	app.Listen(":3000")
 
 }
