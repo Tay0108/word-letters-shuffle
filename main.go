@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"os"
 	"strings"
@@ -21,8 +22,10 @@ func main() {
 
 	port := os.Getenv("PORT")
 
+	fmt.Println("Port:", port)
+
 	if port == "" {
-		port = ":5000"
+		port = "5000"
 	}
 
 	app := fiber.New()
@@ -51,6 +54,6 @@ func main() {
 		return c.SendString(outputText)
 	})
 
-	app.Listen(port)
+	app.Listen(":" + port)
 
 }
