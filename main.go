@@ -51,7 +51,11 @@ func main() {
 
 		outputText := strings.Join(outputTextSplitted, " ")
 
-		return c.SendString(outputText)
+		return c.JSON(fiber.Map{
+			"modifiedText": outputText,
+		})
+
+		// return c.SendString(outputText)
 	})
 
 	app.Listen(":" + port)
