@@ -11,3 +11,5 @@ to:
 ```
 Aridcncog to a rrceesah at Cdiramgbe Urysivnite, it d'onest mttaer in what oderr the leertts in a word are, the only itaornmpt thnig is taht the first and lsat ltteer be at the rgiht pacel. The rset can be a ttoal mses and you can siltl read it wuihtot pobrelm. Tihs is bucease the hmaun mind does not read eevry letetr by isletf but the word as a wleho.
 ```
+
+TODO: Create possibility to decode text (from shuffled to words).
